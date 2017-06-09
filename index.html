@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Bootstrap Case</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="app/bootstrap.min.css">
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="app/jquery.min.js"></script>
+<script type="text/javascript" src="app/bootstrap.min.js"></script>
+<script type="text/javascript" src="app/angular.min.js"></script>
+<script src="js/script.js"></script>
+
+</head>
+<body ng-app="myApp">
+	<div ng-controller="MyController">
+
+		<div class="container">
+			<div class="panel panel-default">
+				<div class="panel-heading">Header</div>
+				<div class="panel-body shopping-list">
+					<div class="row">
+						<div ng-class="cartItems.length ? 'col-md-8' : 'col-md-12'">
+							<div ng-repeat="product in products track by $index">
+								<div class="row ">
+									<!-- {{cartItems}} -->
+									<div ng-repeat="item in product">
+
+										<div class="col-md-4 icon">
+											<img src="images/{{item.Image}}" class="img-responsive">
+											<div class="product-details">
+												{{item.Brand}}
+												<h3>{{item.Product}}</h3>
+												<div>{{item.ProductDetail}}</div>
+												Rs : {{item.Price}}<br>
+
+												<button ng-hide="hasTag(item.PId)"
+													ng-click="addToCart(item.PId, item.Product, item.Price)">Add
+													to Cart</button>
+												<div ng-show="hasTag(item.PId)">
+													<div class="row">
+														<div class="col-md-2 cartBox"
+															ng-click="reduceQuantity(item.PId)">-</div>
+														<div class="col-md-7 cartBox"
+															ng-bind="numberOfProducts(item.PId)">in Cart</div>
+														<div class="col-md-2 cartBox"
+															ng-click="addQuantity(item.PId)">+</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+						<div class="col-md-4 icon" ng-if="cartItems.length">
+
+							<div class="cart-box">
+
+								<h3>Your Cart Summary</h3>
+								<div class="row">
+									<div class="col-md-6">Items in Cart</div>
+									<div class="col-md-6">Total Ruppes</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">{{cartItems.length}}</div>
+									<div class="col-md-6" ng-bind="totalCost()"></div>
+								</div>
+							</div>
+							<hr>
+							<div class="row" ng-show="cartItems.length != 0">
+								<div class="col-md-4">Item</div>
+								<div class="col-md-3">Quantity</div>
+								<div class="col-md-2">Total Rs</div>
+								<div class="col-md-2"></div>
+							</div>
+							<div class="row" ng-show="cartItems.length === 0">NO ITEAMS
+								IN THE CART</div>
+
+							<div class="row cart-box" ng-repeat="item in cartItems track by $index">
+
+								<div class="col-md-4">{{item.Product}}</div>
+								<div class="col-md-3">{{item.Quantity}}</div>
+								<div class="col-md-2">{{item.Price}}</div>
+								<div class="col-md-2">
+									<button ng-click="remove(item.PId)">Remove</button>
+								</div>
+							</div>
+							<button ng-click="buy()">Proceed to Pay</button>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">Footer</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
